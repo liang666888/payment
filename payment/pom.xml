@@ -1,0 +1,95 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>pers.wl</groupId>
+	<artifactId>payment</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<name>payment</name>
+	<description>payment</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+		<druid.version>1.1.16</druid.version>
+	</properties>
+
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.0.3.RELEASE</version>
+		<relativePath /> <!-- lookup parent from repository -->
+	</parent>
+
+	<modules>
+		<module>payment-api</module>
+	</modules>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			<!-- spring状态机 -->
+			<!-- https://mvnrepository.com/artifact/org.springframework.statemachine/spring-statemachine-core -->
+			<dependency>
+				<groupId>org.springframework.statemachine</groupId>
+				<artifactId>spring-statemachine-core</artifactId>
+				<version>2.1.1.RELEASE</version>
+			</dependency>
+			<dependency>
+				<groupId>log4j</groupId>
+				<artifactId>log4j</artifactId>
+				<version>1.2.17</version>
+			</dependency>
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>1.18.6</version>
+			</dependency>
+			<dependency>
+				<groupId>com.spring4all</groupId>
+				<artifactId>swagger-spring-boot-starter</artifactId>
+				<version>1.8.0.RELEASE</version>
+			</dependency>
+			<!-- aliyun sms -->
+			<dependency>
+				<groupId>com.aliyun</groupId>
+				<artifactId>aliyun-java-sdk-core</artifactId>
+				<version>4.1.0</version>
+			</dependency>
+			<!-- alipay -->
+			<dependency>
+				<groupId>com.alipay.sdk</groupId>
+				<artifactId>alipay-sdk-java</artifactId>
+				<version>3.7.26.ALL</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope><!-- 通过非继承的方式来引入这段依赖管理配置,只能用在dependencyManagement中 -->
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<build>
+        <plugins>
+        	<plugin> 
+	            <groupId>org.apache.maven.plugins</groupId> 
+	            <artifactId>maven-compiler-plugin</artifactId> 
+	            <configuration> 
+	                <source>${java.version}</source> 
+	                <target>${java.version}</target>
+	                <encoding>${project.build.sourceEncoding}</encoding>
+	            </configuration> 
+	        </plugin>
+        </plugins>
+    </build>
+</project>
