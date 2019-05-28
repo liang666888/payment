@@ -8,8 +8,8 @@
     <!-- 项目的appid -->
     <springProperty scope="context" name="APP_ID" source="spring.application.name"/>
     <!-- 日志路径 --> 
-  	<!-- <property name="LOG_PATH" value="/app/applog"/> -->
-  	<property name="LOG_PATH" value="/Users/wuliang/applog"/>
+  	<property name="LOG_PATH" value="/app/applog"/>
+    <!-- <property name="LOG_PATH" value="/Users/wuliang/applog"/> -->
     <!-- 控制台打印日志的相关配置 --> 
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
     	<!-- 日志格式 -->
