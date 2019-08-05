@@ -13,7 +13,7 @@
 
 	<properties>
 		<!-- 启动脚本相关配置 -->
-		<scripts_packageName>${project.artifactId}-${project.version}</scripts_packageName>
+		<scripts_packageName>${project.artifactId}--${activeProfile}</scripts_packageName>
 		<scripts_bootMain>pers.wl.payment.api.Application</scripts_bootMain>
 	</properties>
 
@@ -75,8 +75,10 @@
 		</dependency>
 
 		<!-- alipay -->
-		<!-- <dependency> <groupId>com.alipay.sdk</groupId> <artifactId>alipay-sdk-java</artifactId> 
-			</dependency> -->
+		<dependency> 
+			<groupId>com.alipay.sdk</groupId> 
+			<artifactId>alipay-sdk-java</artifactId> 
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

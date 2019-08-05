@@ -10,7 +10,6 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import pers.wl.payment.api.common.enums.ServiceOperEnum;
 
 /**
  * 描述说明
@@ -30,5 +29,5 @@ public @interface ServiceOper {
 	 * 
 	 * @return
 	 */
-	public ServiceOperEnum oper() default ServiceOperEnum.UNKNOW;
+	public String desc() default "";
 }

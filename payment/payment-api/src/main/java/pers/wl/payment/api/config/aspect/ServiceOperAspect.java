@@ -1,12 +1,13 @@
 /**
  * Copyright © 2017-2018 WL.All Rights Reserved.
  */
-package pers.wl.payment.api.common.aspect;
+package pers.wl.payment.api.config.aspect;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -51,24 +52,26 @@ public class ServiceOperAspect {
 			// 执行方法
 			object = pjp.proceed();
 			excuteSuccess = true;
+		} catch (ConstraintViolationException exception) {
+			LogUtil.error(logger, serviceOper.desc() + "数据库操作异常", exception);
+			throw new BizException(PayApiRetCodeEnum.SYSTEM_ERROR.code, PayApiRetCodeEnum.SYSTEM_ERROR.msg);
 		} catch (DataIntegrityViolationException exception) {
-			LogUtil.warn(logger, serviceOper.oper().desc + "唯一性约束冲突", exception.getMessage());
-			throw new BizException(PayApiRetCodeEnum.DUPLICATE_KEY_ERROR.code,
-					PayApiRetCodeEnum.DUPLICATE_KEY_ERROR.msg);
+			LogUtil.warn(logger, serviceOper.desc() + "唯一性约束冲突", exception.getMessage());
+			throw new BizException(PayApiRetCodeEnum.SYSTEM_ERROR.code, PayApiRetCodeEnum.SYSTEM_ERROR.msg);
 		} catch (BizException exception) {
-			LogUtil.info(logger, serviceOper.oper().desc + "业务异常：", exception.getCode(), exception.getMessage());
+			LogUtil.info(logger, serviceOper.desc() + "业务异常：", exception.getCode(), exception.getMessage());
 			throw exception;
 		} catch (Exception exception) {
-			LogUtil.error(logger, serviceOper.oper().desc + "执行异常：", exception);
+			LogUtil.error(logger, serviceOper.desc() + "执行异常：", exception);
 			throw new BizException(PayApiRetCodeEnum.SYSTEM_ERROR.code, PayApiRetCodeEnum.SYSTEM_ERROR.msg);
 		} catch (Throwable exception) {
-			LogUtil.error(serviceOper.oper().desc + "执行异常：", exception);
+			LogUtil.error(serviceOper.desc() + "执行异常：", exception);
 			throw new BizException(PayApiRetCodeEnum.SYSTEM_ERROR.code, PayApiRetCodeEnum.SYSTEM_ERROR.msg);
 		} finally {
 			// 记录操作时间
 			long endTime = System.currentTimeMillis();
-			LogUtil.info(logger, serviceOper.oper().desc, serviceOper.oper().code,
-					String.valueOf(endTime - startTime) + "ms", String.valueOf(excuteSuccess));
+			LogUtil.info(logger, serviceOper.desc(), "执行时间：", String.valueOf(endTime - startTime) + "ms",
+					String.valueOf(excuteSuccess));
 		}
 		return object;
 	}

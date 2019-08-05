@@ -12,7 +12,7 @@ http://maven.apache.org/ASSEMBLY/2.0.0 ">
         <dependencySet>
             <!--打包进zip文件的lib目录-->
             <useProjectArtifact>false</useProjectArtifact>
-            <outputDirectory>${package-name}-${activeProfile}/lib</outputDirectory>
+            <outputDirectory>${package-name}/lib</outputDirectory>
             <unpack>false</unpack>
         </dependencySet>
     </dependencySets>
@@ -21,7 +21,7 @@ http://maven.apache.org/ASSEMBLY/2.0.0 ">
         <!-- 配置文件打包进zip文件的conf目录 -->
         <fileSet>
             <directory>${project.basedir}/src/main/profiles/${activeProfile}</directory>
-            <outputDirectory>${package-name}-${activeProfile}/conf</outputDirectory>
+            <outputDirectory>${package-name}/conf</outputDirectory>
             <includes>
                 <include>**/*</include>
                 <!--<include>*.xml</include>-->
@@ -48,7 +48,7 @@ http://maven.apache.org/ASSEMBLY/2.0.0 ">
         <!-- 项目编译出来的jar打包进zip文件 -->
         <fileSet>
             <directory>${project.build.directory}</directory>
-            <outputDirectory>${package-name}-${activeProfile}/</outputDirectory>
+            <outputDirectory>${package-name}/</outputDirectory>
             <includes>
                 <include>*.jar</include>
             </includes>

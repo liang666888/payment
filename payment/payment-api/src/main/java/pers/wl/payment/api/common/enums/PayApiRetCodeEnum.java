@@ -14,14 +14,15 @@ package pers.wl.payment.api.common.enums;
 public enum PayApiRetCodeEnum {
 	SUCCESS("0000","成功"),
 	/**业务异常*/
-	REQUEST_ILLEGAL("QC0001", "请求报文非法"),
-	PARAM_ILLEGAL("QC0002", "参数校验未通过"),
+	REQUEST_ILLEGAL("PAY0001", "请求报文非法"),
+	PARAM_ILLEGAL("PAY0002", "参数校验未通过"),
+	RECORD_NOT_EXIST("PAY0003", "记录不存在"),
 	
 	
 	/**系统类错误*/
-	SYSTEM_TIMEOUT("QC9001", "服务调用超时"),
-	DUPLICATE_KEY_ERROR("QC9002","唯一性约束冲突"),
-	SYSTEM_ERROR("QC9999", "系统错误");
+	SYSTEM_TIMEOUT("PAY9001", "服务调用超时"),
+	DUPLICATE_KEY_ERROR("PAY9002","唯一性约束冲突"),
+	SYSTEM_ERROR("PAY9999", "系统错误");
 	
 	
 	public final String code;

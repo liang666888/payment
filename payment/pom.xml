@@ -35,13 +35,6 @@
 				<artifactId>druid-spring-boot-starter</artifactId>
 				<version>${druid.version}</version>
 			</dependency>
-			<!-- spring状态机 -->
-			<!-- https://mvnrepository.com/artifact/org.springframework.statemachine/spring-statemachine-core -->
-			<dependency>
-				<groupId>org.springframework.statemachine</groupId>
-				<artifactId>spring-statemachine-core</artifactId>
-				<version>2.1.1.RELEASE</version>
-			</dependency>
 			<dependency>
 				<groupId>log4j</groupId>
 				<artifactId>log4j</artifactId>
@@ -92,4 +85,21 @@
 	        </plugin>
         </plugins>
     </build>
+    
+    <distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>releases</name>
+			<url>
+				http://47.104.252.117:8081/repository/maven-releases/
+			</url>
+		</repository>
+		<snapshotRepository>
+			<id>snapshots</id>
+			<name>snapshots</name>
+			<url>
+				http://47.104.252.117:8081/repository/maven-snapshots/ 
+			</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
