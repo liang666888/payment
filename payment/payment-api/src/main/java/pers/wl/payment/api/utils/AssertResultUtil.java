@@ -29,11 +29,11 @@ public class AssertResultUtil {
 		}
 	}
 
-	public static void isNull(Object object, BizException bizException) {
+	public static void isNull(Object object, PayApiRetCodeEnum resultCode, String detailMessage) {
 		try {
-			Assert.isNull(object, bizException.getMessage());
+			Assert.isNull(object, resultCode.msg);
 		} catch (RuntimeException e) {
-			throw bizException;
+			throw new BizException(resultCode.code, resultCode.msg, detailMessage);
 		}
 	}
 
@@ -45,11 +45,27 @@ public class AssertResultUtil {
 		}
 	}
 
+	public static void notNull(Object object, PayApiRetCodeEnum resultCode, String detailMessage) {
+		try {
+			Assert.notNull(object, resultCode.msg);
+		} catch (RuntimeException e) {
+			throw new BizException(resultCode.code, resultCode.msg, detailMessage);
+		}
+	}
+
 	public static void notBlank(String string, PayApiRetCodeEnum resultCode) {
 		try {
 			Assert.hasText(string, resultCode.msg);
 		} catch (RuntimeException e) {
 			throw new BizException(resultCode.code, resultCode.msg);
+		}
+	}
+
+	public static void notBlank(String string, PayApiRetCodeEnum resultCode, String detailMessage) {
+		try {
+			Assert.hasText(string, resultCode.msg);
+		} catch (RuntimeException e) {
+			throw new BizException(resultCode.code, resultCode.msg, detailMessage);
 		}
 	}
 
@@ -61,19 +77,19 @@ public class AssertResultUtil {
 		}
 	}
 
+	public static void notEmpty(Map<String, String> map, PayApiRetCodeEnum resultCode, String detailMessage) {
+		try {
+			Assert.notEmpty(map, resultCode.msg);
+		} catch (RuntimeException e) {
+			throw new BizException(resultCode.code, resultCode.msg, detailMessage);
+		}
+	}
+
 	public static void isTrue(boolean boolValue, PayApiRetCodeEnum resultCode) {
 		try {
 			Assert.isTrue(boolValue, resultCode.msg);
 		} catch (RuntimeException e) {
 			throw new BizException(resultCode.code, resultCode.msg);
-		}
-	}
-
-	public static void isTrue(boolean boolValue, PayApiRetCodeEnum resultCode, String detail) {
-		try {
-			Assert.isTrue(boolValue, resultCode.msg);
-		} catch (RuntimeException e) {
-			throw new BizException(resultCode.code, resultCode.msg, detail);
 		}
 	}
 
@@ -96,6 +112,21 @@ public class AssertResultUtil {
 			}
 		} catch (RuntimeException e) {
 			throw new BizException(resultCode.code, resultCode.msg);
+		}
+	}
+
+	public static void equals(String actualResult, String expectResult, PayApiRetCodeEnum resultCode,
+			String detailMessage) {
+		if (null == actualResult && null != expectResult) {
+			throw new BizException(resultCode.code, resultCode.msg);
+		}
+
+		try {
+			if (null != actualResult) {
+				Assert.isTrue(actualResult.equals(expectResult), resultCode.msg);
+			}
+		} catch (RuntimeException e) {
+			throw new BizException(resultCode.code, resultCode.msg, detailMessage);
 		}
 	}
 

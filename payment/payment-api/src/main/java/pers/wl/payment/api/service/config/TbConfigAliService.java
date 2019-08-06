@@ -4,15 +4,18 @@
 package pers.wl.payment.api.service.config;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheConfig;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import com.cloud.comp.common.exceptions.BizException;
 
@@ -20,9 +23,13 @@ import cn.hutool.core.util.IdUtil;
 import pers.wl.payment.api.common.annotations.ServiceOper;
 import pers.wl.payment.api.common.enums.PayApiRetCodeEnum;
 import pers.wl.payment.api.entity.TbConfigAli;
+import pers.wl.payment.api.entity.TbConfigApplicationAli;
 import pers.wl.payment.api.repository.TbConfigAliRepository;
+import pers.wl.payment.api.repository.TbConfigApplicationAliRepository;
+import pers.wl.payment.api.service.config.cache.AppAliCacheService;
 import pers.wl.payment.api.service.config.dto.AddConfigAliDto;
 import pers.wl.payment.api.service.config.dto.UpdateConfigAliDto;
+import pers.wl.payment.api.utils.AssertResultUtil;
 
 /**
  * 描述说明
@@ -32,11 +39,18 @@ import pers.wl.payment.api.service.config.dto.UpdateConfigAliDto;
  * @Date 2019年8月5日 下午1:32:30
  * @since JDK 1.8
  */
+@CacheConfig(cacheNames = "TbConfigAliService")
 @Service
 public class TbConfigAliService {
 
 	@Autowired
 	private TbConfigAliRepository tbConfigAliRepository;
+
+	@Autowired
+	private TbConfigApplicationAliRepository tbConfigApplicationAliRepository;
+
+	@Autowired
+	private AppAliCacheService appAliCacheService;
 
 	/**
 	 * 新增支付宝配置
@@ -68,7 +82,14 @@ public class TbConfigAliService {
 				PayApiRetCodeEnum.RECORD_NOT_EXIST.msg));
 		BeanUtils.copyProperties(dto, entity);
 		entity.setUpdateTime(new Date());
-		return tbConfigAliRepository.saveAndFlush(entity);
+		entity = tbConfigAliRepository.saveAndFlush(entity);
+		// 重置关联的应用缓存
+		List<TbConfigApplicationAli> reationAppList = tbConfigApplicationAliRepository
+				.findByConfigAliId(dto.getConfigAliId());
+		for (TbConfigApplicationAli tbConfigApplicationAli : reationAppList) {
+			appAliCacheService.resetAppAvailableAliConfig(tbConfigApplicationAli.getAppId());
+		}
+		return entity;
 	}
 
 	/**
@@ -80,6 +101,9 @@ public class TbConfigAliService {
 	@Modifying
 	@ServiceOper(desc = "删除支付宝配置")
 	public void delete(String configAliId) {
+		// 查询关联的应用列表
+		List<TbConfigApplicationAli> reationAppList = tbConfigApplicationAliRepository.findByConfigAliId(configAliId);
+		AssertResultUtil.isTrue(CollectionUtils.isEmpty(reationAppList),PayApiRetCodeEnum.CONFIG_HAS_REATION_APP);
 		tbConfigAliRepository.deleteById(configAliId);
 	}
 

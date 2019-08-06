@@ -22,6 +22,12 @@ import lombok.Data;
 @PropertySource(value="classpath:config/alipay.properties")
 @ConfigurationProperties(prefix = "alipay")
 public class AlipayConfig {
+	
+	public static final String APP_PRODUCT_CODE    = "QUICK_MSECURITY_PAY";
+
+    public static final String DIRECT_PRODUCT_CODE = "FAST_INSTANT_TRADE_PAY";
+
+    public static final String WAP_PRODUCT_CODE    = "QUICK_WAP_PAY";
 
 	private String charset;
 
@@ -36,5 +42,10 @@ public class AlipayConfig {
 	 * 支付宝公钥
 	 */
 	private String alipayPulicKey;
+	
+	/**
+	 * 支付宝异步通知地址
+	 */
+	private String notifyUrl;
 
 }

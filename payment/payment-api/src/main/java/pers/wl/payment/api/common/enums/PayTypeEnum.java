@@ -13,12 +13,24 @@ package pers.wl.payment.api.common.enums;
  */
 public enum PayTypeEnum {
 	
-	ALIPAY_PC_DIRECT("支付宝即时到账");
+	ALIPAY_APP("支付宝APP","ali"),
+    ALIPAY_WAP("支付宝手机网页","ali"),
+    ALIPAY_PC_DIRECT("支付宝即时到账","ali"),
+    ALIPAY_QR("支付宝当面付","ali");
 	
+	/**
+	 * 描述
+	 */
 	public String desc;
 	
-	private PayTypeEnum(String desc) {
+	/**
+	 * 处理渠道（PayHandlerFactory中用于获取对应实现类）
+	 */
+	public String handler;
+	
+	private PayTypeEnum(String desc,String handler) {
 		this.desc = desc;
+		this.handler = handler;
 	}
 	
 }

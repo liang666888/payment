@@ -3,10 +3,15 @@
  */
 package pers.wl.payment.api.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import pers.wl.payment.api.entity.TbConfigApplicationAli;
+import pers.wl.payment.api.service.config.cache.model.AppAliCacheModel;
 
 /**
  * 描述说明
@@ -19,4 +24,24 @@ import pers.wl.payment.api.entity.TbConfigApplicationAli;
 public interface TbConfigApplicationAliRepository
 		extends JpaRepository<TbConfigApplicationAli, String>, JpaSpecificationExecutor<TbConfigApplicationAli> {
 
+	/**
+	 * 查询应用可用的支付宝配置
+	 * 
+	 * @param appId
+	 *            应用ID
+	 * @return
+	 */
+	@Query(value = "select new pers.wl.payment.api.service.config.cache.model.AppAliCacheModel(t1.serialId,t1.appId,"
+			+ "t1.configAliId,t1.notifyUrl,t1.returnUrl,t1.weight,t2.aliAppId,t2.partner,t2.privateKey,t2.sellerId,"
+			+ "t2.signType,t2.stat) from TbConfigApplicationAli t1,TbConfigAli t2 "
+			+ "where t1.appId = :appId and t1.configAliId = t2.configAliId and t2.stat = 'ENABLE'")
+	public List<AppAliCacheModel> findAppAliAvailableConfig(@Param("appId") String appId);
+
+	/**
+	 * 根据支付宝配置ID，查询出所有使用改配置的应用
+	 * 
+	 * @param configAliId
+	 * @return
+	 */
+	public List<TbConfigApplicationAli> findByConfigAliId(String configAliId);
 }

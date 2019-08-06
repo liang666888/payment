@@ -77,13 +77,13 @@ public class TbConfigApplicationService {
 	/**
 	 * 删除应用
 	 * 
-	 * @param id
+	 * @param appId
 	 */
 	@CacheEvict(key = "#p0")
 	@Modifying
 	@ServiceOper(desc = "删除应用")
-	public void delete(String id) {
-		tbConfigApplicationRepository.deleteById(id);
+	public void delete(String appId) {
+		tbConfigApplicationRepository.deleteById(appId);
 	}
 
 	/**
@@ -96,9 +96,7 @@ public class TbConfigApplicationService {
 	@ServiceOper(desc = "根据appId查询应用")
 	public TbConfigApplication queryByAppId(String appId) {
 		Optional<TbConfigApplication> optional = tbConfigApplicationRepository.findById(appId);
-		TbConfigApplication entity = optional
-				.orElseThrow(() -> new BizException(PayApiRetCodeEnum.RECORD_NOT_EXIST.code,
-						PayApiRetCodeEnum.RECORD_NOT_EXIST.msg));
+		TbConfigApplication entity = optional.orElse(null);
 		return entity;
 	}
 }

@@ -5,6 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,13 +22,26 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 public class WebUtil {
 
 	/**
-	 * 尝试获取当前请求的HttpServletRequest实例
+	 * 获取当前请求的HttpServletRequest实例
 	 *
 	 * @return HttpServletRequest
 	 */
 	public static HttpServletRequest getHttpServletRequest() {
 		try {
 			return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	/**
+	 * 获取当前请求的HttpServletResponse实例
+	 * 
+	 * @return
+	 */
+	public static HttpServletResponse getHttpServletResponse() {
+		try {
+			return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getResponse();
 		} catch (Exception e) {
 			return null;
 		}

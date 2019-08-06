@@ -11,41 +11,38 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 /**
  * The persistent class for the tb_config_application_ali database table.
  * 
  */
 @Entity
-@Table(name="tb_config_application_ali")
-@NamedQuery(name="TbConfigApplicationAli.findAll", query="SELECT t FROM TbConfigApplicationAli t")
+@Table(name = "tb_config_application_ali")
+@NamedQuery(name = "TbConfigApplicationAli.findAll", query = "SELECT t FROM TbConfigApplicationAli t")
 public class TbConfigApplicationAli implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="serial_id")
+	@Column(name = "serial_id")
 	private String serialId;
 
-	@Column(name="app_id")
+	@Column(name = "app_id")
 	private String appId;
 
-	@Column(name="config_ali_id")
+	@Column(name = "config_ali_id")
 	private String configAliId;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="create_time")
+	@Column(name = "create_time")
 	private Date createTime;
 
-	@Column(name="notify_url")
+	@Column(name = "notify_url")
 	private String notifyUrl;
 
-	@Column(name="return_url")
+	@Column(name = "return_url")
 	private String returnUrl;
 
-	private String stat;
-
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="update_time")
+	@Column(name = "update_time")
 	private Date updateTime;
 
 	private int weight;
@@ -99,14 +96,6 @@ public class TbConfigApplicationAli implements Serializable {
 
 	public void setReturnUrl(String returnUrl) {
 		this.returnUrl = returnUrl;
-	}
-
-	public String getStat() {
-		return this.stat;
-	}
-
-	public void setStat(String stat) {
-		this.stat = stat;
 	}
 
 	public Date getUpdateTime() {

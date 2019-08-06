@@ -17,6 +17,9 @@ public enum PayApiRetCodeEnum {
 	REQUEST_ILLEGAL("PAY0001", "请求报文非法"),
 	PARAM_ILLEGAL("PAY0002", "参数校验未通过"),
 	RECORD_NOT_EXIST("PAY0003", "记录不存在"),
+	APP_NOT_EXIST("PAY0004", "应用不存在或已停用"),
+	CONFIG_HAS_REATION_APP("PAY0005", "配置无法删除,存在关联的应用"),
+	NO_PAY_CONFIG("PAY0006", "应用支付渠道异常"),
 	
 	
 	/**系统类错误*/

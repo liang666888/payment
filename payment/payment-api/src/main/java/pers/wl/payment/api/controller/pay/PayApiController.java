@@ -3,9 +3,16 @@
  */
 package pers.wl.payment.api.controller.pay;
 
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import pers.wl.payment.api.service.pay.PayService;
+import pers.wl.payment.api.service.pay.dto.PayOrderDto;
 
 /**
  * 描述说明
@@ -19,11 +26,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/api")
 public class PayApiController {
 
+	@Autowired
+	private PayService payService;
+
 	/**
 	 * pc/h5网页支付
 	 */
 	@PostMapping("/wappay")
-	public void wappay() {
-
+	public void wappay(@RequestBody @Valid PayOrderDto payOrderDto) {
+		payService.wapPay(payOrderDto);
 	}
+
 }

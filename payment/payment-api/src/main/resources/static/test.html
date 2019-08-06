@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>demo</title>
+<style type="text/css">
+	div{
+		margin:10px;
+	}
+</style>
+</head>
+<body>
+	<form action="http://127.0.0.1:8080/api/wappay/" method="post" enctype="application/x-www-form-urlencoded">
+		<div>
+			<label>appId</label>
+			<input name="appId" type="text" value="5d47b6dea93a0f262ffec9cf">
+		</div>
+		<div>
+			<label>payType</label>
+			<select name="payType">
+				<option value="ALIPAY_APP">支付宝APP</option>
+				<option value="ALIPAY_WAP">支付宝手机网页</option>
+				<option value="ALIPAY_PC_DIRECT">支付宝即时到账</option>
+				<option value="ALIPAY_QR">支付宝当面付</option>
+			</select>
+		</div>
+		<div>
+			<label>订单号</label>
+			<input id="orderno" name="orderno" type="text" value="">
+		</div>
+		<div>
+			<label>金额（单位:元）</label>
+			<input name="amount" type="text" value="0.01">
+		</div>
+		<div>
+			<label>标题</label>
+			<input name="subject" type="text" value="测试">
+		</div>
+		<div>
+			<label>描述</label>
+			<input name="memo" type="text" value="描述">
+		</div>
+		<div>
+			<input type="submit" value="提交">
+		</div>
+		
+	</form>
+	<script>
+		var today = new Date(); 
+		var date; 
+		date = (today.getFullYear()) +"-" + (today.getMonth() + 1 ) + "-" + today.getDate() + "-" + today.toLocaleTimeString(); 
+		document.getElementById("orderno").value = date;
+	</script>
+</body>
+</html>

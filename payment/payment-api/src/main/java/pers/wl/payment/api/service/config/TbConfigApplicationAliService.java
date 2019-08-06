@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.cloud.comp.common.exceptions.BizException;
@@ -17,6 +18,7 @@ import pers.wl.payment.api.common.annotations.ServiceOper;
 import pers.wl.payment.api.common.enums.PayApiRetCodeEnum;
 import pers.wl.payment.api.entity.TbConfigApplicationAli;
 import pers.wl.payment.api.repository.TbConfigApplicationAliRepository;
+import pers.wl.payment.api.service.config.cache.AppAliCacheService;
 import pers.wl.payment.api.service.config.dto.AddAppAliDto;
 import pers.wl.payment.api.service.config.dto.UpdateAppAliDto;
 
@@ -28,11 +30,15 @@ import pers.wl.payment.api.service.config.dto.UpdateAppAliDto;
  * @Date 2019年8月5日 上午11:34:43
  * @since JDK 1.8
  */
+@Cacheable(cacheNames = "TbConfigApplicationAliService")
 @Service
 public class TbConfigApplicationAliService {
 
 	@Autowired
 	private TbConfigApplicationAliRepository tbConfigApplicationAliRepository;
+
+	@Autowired
+	private AppAliCacheService appAliCacheService;
 
 	/**
 	 * 新增应用支付宝配置
@@ -46,7 +52,10 @@ public class TbConfigApplicationAliService {
 		BeanUtils.copyProperties(dto, entity);
 		entity.setSerialId(IdUtil.objectId());
 		entity.setCreateTime(new Date());
-		return tbConfigApplicationAliRepository.saveAndFlush(entity);
+		entity = tbConfigApplicationAliRepository.saveAndFlush(entity);
+		// 重置应用可用的支付宝配置
+		appAliCacheService.resetAppAvailableAliConfig(dto.getAppId());
+		return entity;
 	}
 
 	/**
@@ -63,7 +72,10 @@ public class TbConfigApplicationAliService {
 						PayApiRetCodeEnum.RECORD_NOT_EXIST.msg));
 		BeanUtils.copyProperties(dto, entity);
 		entity.setUpdateTime(new Date());
-		return tbConfigApplicationAliRepository.saveAndFlush(entity);
+		entity = tbConfigApplicationAliRepository.saveAndFlush(entity);
+		// 重置应用可用的支付宝配置
+		appAliCacheService.resetAppAvailableAliConfig(dto.getAppId());
+		return entity;
 	}
 
 	/**
@@ -73,7 +85,12 @@ public class TbConfigApplicationAliService {
 	 */
 	@ServiceOper(desc = "删除应用支付宝配置")
 	public void delete(String serialId) {
-		tbConfigApplicationAliRepository.deleteById(serialId);
+		Optional<TbConfigApplicationAli> optional = tbConfigApplicationAliRepository.findById(serialId);
+		optional.ifPresent(t -> {
+			tbConfigApplicationAliRepository.deleteById(serialId);
+			// 重置应用可用的支付宝配置
+			appAliCacheService.resetAppAvailableAliConfig(t.getAppId());
+		});
 	}
 
 }
