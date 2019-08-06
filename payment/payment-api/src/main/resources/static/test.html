@@ -47,9 +47,7 @@
 	</form>
 	<script>
 		var today = new Date(); 
-		var date; 
-		date = (today.getFullYear()) +"-" + (today.getMonth() + 1 ) + "-" + today.getDate() + "-" + today.toLocaleTimeString(); 
-		document.getElementById("orderno").value = date;
+		document.getElementById("orderno").value = today.getTime();
 	</script>
 </body>
 </html>

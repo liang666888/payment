@@ -40,7 +40,7 @@ import pers.wl.payment.api.utils.WebUtil;
  * @since JDK 1.8
  */
 @Service
-public class AliPayHandler implements PayHandler {
+public class AliPayQrHandler implements PayHandler {
 
 	@Autowired
 	private AlipayConfig alipayConfig;
