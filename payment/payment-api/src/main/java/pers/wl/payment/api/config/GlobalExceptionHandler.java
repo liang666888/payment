@@ -24,7 +24,7 @@ import pers.wl.payment.api.utils.LogUtil;
  * @version $Id: GlobalExceptionHandler.java, v 0.1 2018年11月2日 上午9:49:57 wuliang
  *          Exp $
  */
-@ControllerAdvice(basePackages = { "com.qqgy.core.controller" })
+@ControllerAdvice(basePackages = { "pers.wl.payment.api.controller" })
 public class GlobalExceptionHandler {
 
 	private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
