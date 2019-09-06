@@ -75,10 +75,21 @@
 		</dependency>
 
 		<!-- alipay -->
-		<dependency> 
-			<groupId>com.alipay.sdk</groupId> 
-			<artifactId>alipay-sdk-java</artifactId> 
+		<dependency>
+			<groupId>com.alipay.sdk</groupId>
+			<artifactId>alipay-sdk-java</artifactId>
 		</dependency>
+
+		<!-- nacos配置starting -->
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+		<!-- nacos配置ending -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

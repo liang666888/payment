@@ -20,8 +20,9 @@ import lombok.Data;
 @AllArgsConstructor
 public class AppAliCacheModel implements Serializable {
 
+
 	/** */
-	private static final long serialVersionUID = -6611224595578092443L;
+	private static final long serialVersionUID = -2709832105015326386L;
 
 	private String serialId;
 

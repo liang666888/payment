@@ -3,6 +3,8 @@ package pers.wl.payment.core;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import com.cloud.comp.AutoconfigPackage;
@@ -17,6 +19,8 @@ import com.spring4all.swagger.EnableSwagger2Doc;
  * @Date 2019年4月10日 下午9:37:52
  * @since JDK 1.8
  */
+@RefreshScope
+@EnableDiscoveryClient
 @EnableSwagger2Doc
 @EntityScan("pers.wl.payment.core.entity")
 @SpringBootApplication(scanBasePackageClasses = { Application.class, AutoconfigPackage.class })

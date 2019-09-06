@@ -31,7 +31,7 @@ public interface TbConfigApplicationAliRepository
 	 *            应用ID
 	 * @return
 	 */
-	@Query(value = "select new pers.wl.payment.api.service.config.cache.model.AppAliCacheModel(t1.serialId,t1.appId,"
+	@Query(value = "select new pers.wl.payment.core.service.config.cache.model.AppAliCacheModel(t1.serialId,t1.appId,"
 			+ "t1.configAliId,t1.notifyUrl,t1.returnUrl,t1.weight,t2.aliAppId,t2.partner,t2.privateKey,t2.sellerId,"
 			+ "t2.signType,t2.stat) from TbConfigApplicationAli t1,TbConfigAli t2 "
 			+ "where t1.appId = :appId and t1.configAliId = t2.configAliId and t2.stat = 'ENABLE'")

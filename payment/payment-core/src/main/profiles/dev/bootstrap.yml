@@ -1,0 +1,14 @@
+spring: 
+  application:
+    name: payment-core
+  cloud: 
+    nacos:
+      config:
+        server-addr: 47.104.252.117:8848
+        namespace: 5f16e3ce-55d8-4c77-a3cc-b6cb3afbf0b3
+        group: DEFAULT_GROUP
+        file-extension: yaml
+      discovery: 
+        namespace: 5f16e3ce-55d8-4c77-a3cc-b6cb3afbf0b3
+        server-addr: 47.104.252.117:8848
+  
