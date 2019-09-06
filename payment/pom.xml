@@ -25,7 +25,8 @@
 	</parent>
 
 	<modules>
-		<module>payment-api</module>
+		<module>payment-core-api</module>
+		<module>payment-core</module>
 	</modules>
 
 	<dependencyManagement>
@@ -68,6 +69,14 @@
 				<version>${spring-cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope><!-- 通过非继承的方式来引入这段依赖管理配置,只能用在dependencyManagement中 -->
+			</dependency>
+			<!-- spring-cloud-alibaba -->
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>2.0.0.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
