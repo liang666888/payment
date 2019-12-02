@@ -1,7 +1,7 @@
 /**
  * Copyright © 2017-2019 WL.All Rights Reserved.
  */
-package pers.wl.payment.core.service.pay.handler;
+package pers.wl.payment.core.service.pay.handler.ali;
 
 import java.io.IOException;
 import java.text.MessageFormat;
@@ -17,16 +17,14 @@ import com.alipay.api.AlipayApiException;
 import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
-import com.cloud.comp.common.model.ResultModel;
 
 import pers.wl.payment.core.api.client.pay.dto.PayOrderDto;
 import pers.wl.payment.core.api.enums.PayApiRetCodeEnum;
-import pers.wl.payment.core.api.enums.PayTypeEnum;
 import pers.wl.payment.core.config.payconfig.AlipayConfig;
 import pers.wl.payment.core.service.config.cache.AppAliCacheService;
 import pers.wl.payment.core.service.config.cache.model.AppAliCacheModel;
-import pers.wl.payment.core.service.pay.PayHandler;
 import pers.wl.payment.core.service.pay.dto.AliPayContent;
+import pers.wl.payment.core.service.pay.handler.WapPayHandler;
 import pers.wl.payment.core.utils.AssertResultUtil;
 import pers.wl.payment.core.utils.PayConfigTakeOutUtil;
 import pers.wl.payment.core.utils.WebUtil;
@@ -40,7 +38,7 @@ import pers.wl.payment.core.utils.WebUtil;
  * @since JDK 1.8
  */
 @Service
-public class AliPayAppHandler implements PayHandler {
+public class AliPayPcDirectHandler implements WapPayHandler {
 
 	@Autowired
 	private AlipayConfig alipayConfig;
@@ -49,7 +47,7 @@ public class AliPayAppHandler implements PayHandler {
 	private AppAliCacheService appAliCacheService;
 
 	/**
-	 * @see pers.wl.payment.core.service.pay.PayHandler#wapPay(pers.wl.payment.core.service.pay.dto.PayOrderDto)
+	 * @see pers.wl.payment.core.service.pay.WapPayHandler#wapPay(pers.wl.payment.core.service.pay.dto.PayOrderDto)
 	 */
 	@Override
 	public void wapPay(PayOrderDto payOrderDto) {
@@ -69,7 +67,7 @@ public class AliPayAppHandler implements PayHandler {
 		payContent.setBody(payOrderDto.getMemo());
 		payContent.setOut_trade_no(payOrderDto.getOrderno());
 		payContent.setTotal_amount(payOrderDto.getAmount());
-		payContent.setProduct_code(getAliProductCode(payOrderDto.getPayType()));
+		payContent.setProduct_code(AliProductCode.getAliProductCode(payOrderDto.getPayType()));
 		// 设置支付宝回传参数
 		// payContent.setPassback_params("{\"applicationId\":" +
 		// payOrderDto.getApplicationId() + "}");
@@ -101,35 +99,5 @@ public class AliPayAppHandler implements PayHandler {
 		}
 	}
 
-	/**
-	 * @see pers.wl.payment.core.service.pay.PayHandler#appPay()
-	 */
-	@Override
-	public ResultModel<Object> appPay(PayOrderDto payOrderDto) {
-		return null;
-	}
-
-	private String getAliProductCode(PayTypeEnum payType) {
-		String productCode = null;
-		switch (payType) {
-		case ALIPAY_APP:
-			productCode = "QUICK_MSECURITY_PAY";
-			break;
-		case ALIPAY_PC_DIRECT:
-			productCode = "FAST_INSTANT_TRADE_PAY";
-			break;
-		case ALIPAY_QR:
-			productCode = "FACE_TO_FACE_PAYMENT";
-			break;
-		case ALIPAY_WAP:
-			productCode = "QUICK_WAP_PAY";
-			break;
-
-		default:
-			productCode = "FAST_INSTANT_TRADE_PAY";
-			break;
-		}
-		return productCode;
-	}
 
 }

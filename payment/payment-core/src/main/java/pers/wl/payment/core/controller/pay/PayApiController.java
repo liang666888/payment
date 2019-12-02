@@ -36,4 +36,12 @@ public class PayApiController implements PayApiClient {
 		payService.wapPay(payOrderDto);
 	}
 
+	/** 
+	 * @see pers.wl.payment.core.api.client.pay.PayApiClient#apppay(pers.wl.payment.core.api.client.pay.dto.PayOrderDto)
+	 */
+	@Override
+	public void apppay(@Valid PayOrderDto payOrderDto) {
+		payService.appPay(payOrderDto);
+	}
+
 }

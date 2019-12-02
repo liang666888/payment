@@ -24,4 +24,10 @@ public interface PayApiClient {
 	 */
 	@PostMapping("/wappay")
 	public void wappay(PayOrderDto payOrderDto);
+	
+	/**
+	 * app支付
+	 */
+	@PostMapping("/apppay")
+	public void apppay(PayOrderDto payOrderDto);
 }
