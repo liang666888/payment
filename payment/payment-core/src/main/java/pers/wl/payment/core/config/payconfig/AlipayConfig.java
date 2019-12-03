@@ -28,6 +28,8 @@ public class AlipayConfig {
     public static final String DIRECT_PRODUCT_CODE = "FAST_INSTANT_TRADE_PAY";
 
     public static final String WAP_PRODUCT_CODE    = "QUICK_WAP_PAY";
+    
+    public static final String QR_PRODUCT_CODE = "FACE_TO_FACE_PAYMENT";
 
 	private String charset;
 

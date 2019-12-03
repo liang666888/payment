@@ -4,6 +4,7 @@
 package pers.wl.payment.core.service.pay.handler.ali;
 
 import pers.wl.payment.core.api.enums.PayTypeEnum;
+import pers.wl.payment.core.config.payconfig.AlipayConfig;
 
 /**
  * 
@@ -25,19 +26,19 @@ public class AliProductCode {
 		String productCode = null;
 		switch (payType) {
 		case ALIPAY_APP:
-			productCode = "QUICK_MSECURITY_PAY";
+			productCode = AlipayConfig.APP_PRODUCT_CODE;
 			break;
 		case ALIPAY_PC_DIRECT:
-			productCode = "FAST_INSTANT_TRADE_PAY";
+			productCode = AlipayConfig.DIRECT_PRODUCT_CODE;
 			break;
 		case ALIPAY_QR:
-			productCode = "FACE_TO_FACE_PAYMENT";
+			productCode = AlipayConfig.QR_PRODUCT_CODE;
 			break;
 		case ALIPAY_WAP:
-			productCode = "QUICK_WAP_PAY";
+			productCode = AlipayConfig.WAP_PRODUCT_CODE;
 			break;
 		default:
-			productCode = "FAST_INSTANT_TRADE_PAY";
+			productCode = AlipayConfig.DIRECT_PRODUCT_CODE;
 			break;
 		}
 		return productCode;
